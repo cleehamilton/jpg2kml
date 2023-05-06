@@ -13,7 +13,8 @@
 
 return -->menuRes = list({menuChoice},{second answer})
 '''
-    
+SearchPath = input('Where are the pictures? (needs trailing "\")\n')
+jobName = input('What should we call this session?\n')
 ''' Get Image files in dir  '''
 import glob
 def get_img_paths(search_path,ext,recursive):
@@ -79,7 +80,7 @@ def image_coordinates(img_paths):
 #Seach files
 ext = ".jpg" #EXIF data only exisit in jpegs
 print('------------------------Output-------------------------')
-img_paths = get_img_paths(r'C:\Users\kaff1n8t3d\Desktop\Show N tell\\', ext, 0)
+img_paths = get_img_paths(SearchPath, ext, 0)
 #print(img_paths)
 #get Coords
 
@@ -88,7 +89,7 @@ img_data = image_coordinates(img_paths)
 
 #write KML
 ''' Write KML prebody section '''
-jobName = "Show N tell" #From Folder Name UPDATE THIS
+
 kmlHeader = f'<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2"><Document><name>{jobName}.kml</name><open>1</open>'
 #print(kmlHeader)
 
@@ -138,3 +139,9 @@ print(kmlHeader)
 for n in placemark:
     print(n)
 print(kmlFooter)
+kmlCode = f"{kmlHeader}{placemark}{kmlFooter}"
+#Write File
+file2write = f"{jobName}.kml"
+f = open(file2write,"w")
+f.write(kmlCode)
+f.close()
